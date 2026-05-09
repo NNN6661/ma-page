@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+
+  <!-- Mode app plein écran sur iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ma Page">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <title>Ma Page</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      background: #0a0a0a;
+      color: #f5f5f5;
+      overflow-x: hidden;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      /* Respecte les zones safe de l'iPhone (encoche, barre du bas) */
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* === HORLOGE === */
+    .clock {
+      text-align: center;
+      padding: 32px 20px 16px;
+    }
+
+    .time {
+      font-size: 64px;
+      font-weight: 200;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .date {
+      font-size: 14px;
+      color: #888;
+      margin-top: 8px;
+      text-transform: capitalize;
+    }
+
+    /* === CONTENU PRINCIPAL — à personnaliser === */
+    .content {
+      flex: 1;
+      padding: 24px 20px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: #aaa;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .placeholder {
+      border: 1px dashed #333;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 16px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Horloge en direct -->
+  <div class="clock">
+    <div class="time" id="time">--:--:--</div>
+    <div class="date" id="date">—</div>
+  </div>
+
+  <!-- Zone de contenu : remplace par ce que tu veux -->
+  <main class="content">
+    <h1>Bienvenue, Nicolas</h1>
+    <p>Ceci est ton template. Modifie ce bloc pour y mettre ce que tu veux : notes, dashboard, liens, checklist, etc.</p>
+
+    <div class="placeholder">
+      Édite le fichier <code>ma-page.html</code> sur ton Mac ou via Files sur l'iPhone.
+    </div>
+  </main>
+
+  <script>
+    // === Horloge en temps réel (utilise l'horloge du téléphone, fonctionne offline) ===
+    function updateClock() {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('time').textContent = `${hh}:${mm}:${ss}`;
+
+      const dateStr = now.toLocaleDateString('fr-CH', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      document.getElementById('date').textContent = dateStr;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
